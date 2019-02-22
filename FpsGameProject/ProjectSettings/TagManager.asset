@@ -6,6 +6,8 @@ TagManager:
   tags:
   - player
   - turret
+  - healthtext
+  - scenecam
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,7 @@ public class turret : MonoBehaviour {
 	private float fireCountDown=0f; // bekleme süresini ayarlama
 	public float range=5f;
     public float damage=30f;
+    public float health = 100f;
 	[Header("Unity Setup Fields")]
 	private Transform target;
 	public string enemytag = "player";
