@@ -8,6 +8,7 @@ TagManager:
   - turret
   - healthtext
   - scenecam
+  - ammotext
   layers:
   - Default
   - TransparentFX

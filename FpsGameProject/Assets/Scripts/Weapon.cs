@@ -22,19 +22,39 @@ public class Weapon : MonoBehaviour {
     public Camera mycamera;
     public float range;
     public GameObject bullethole;
+    public GameObject laserimpact;
+    private GameObject hiteffect;
     public float fireRate;
     private float fireDelay;
-    
+    public bool isReloading =false;
+    public bool canfire = true;
 
+    // shotgun
+    public int currentAmmo;
+    public int maxAmmo;
+    public float reloadTime;
+    public int clipsize;
+    //
+    // Laser
+
+    //
+    //Launcher
+ 
+    
+    //
     // Use this for initialization
     void Start () {
         if (weapontype == Weapontype.laser)
         {
+            
             Debug.Log("laser");
             accuracy = 100f;
             firepoint = mycamera.transform;
             range = Mathf.Infinity;
             pelletnumber = 1;
+             hiteffect = laserimpact;
+          
+            
           
         }
         else if (weapontype == Weapontype.shotgun)
@@ -44,6 +64,12 @@ public class Weapon : MonoBehaviour {
             firepoint = mycamera.transform;
             range = Mathf.Infinity;
             pelletnumber = 21;
+            hiteffect = bullethole;
+            maxAmmo = 6;
+            currentAmmo = maxAmmo;
+            clipsize = 12;
+            reloadTime = 2f;
+          
           
         }
         else if (weapontype == Weapontype.launcher)
@@ -76,34 +102,85 @@ public class Weapon : MonoBehaviour {
             if (Physics.Raycast(firepoint.position, direction, out hit, range))
             {
                 Debug.Log(hit.transform.name);
-                GameObject impactGo = Instantiate(bullethole, hit.point, Quaternion.LookRotation(hit.normal));
+                GameObject impactGo = Instantiate(hiteffect, hit.point, Quaternion.LookRotation(hit.normal));
                 Destroy(impactGo, 1f);
 
             }
         }
       
     }
+
+    IEnumerator Reload()
+    {
+        isReloading = true;
+        canfire = false;
+        yield return new WaitForSeconds(reloadTime);
+        if (clipsize < maxAmmo)
+        {
+            currentAmmo = clipsize;
+            clipsize = 0;
+        }
+        else
+        {
+            clipsize = clipsize - (maxAmmo - currentAmmo);
+   
+     
+     
+            currentAmmo = maxAmmo;
+        }
+       
+        isReloading = false;
+        canfire = true;
+    }
 	// Update is called once per frame
 	void Update () {
-        if (firetype == FireType.auto)
+        if (isReloading)
         {
-
-            if (Input.GetButton("Fire1") && Time.time >= fireDelay)
+            return;
+        }
+        if (currentAmmo <= 0 || Input.GetKeyDown(KeyCode.R))
+        {
+            if (clipsize > 0)
             {
-                fireDelay = Time.time + 1f / fireRate;
-                Shoot();
+                StartCoroutine(Reload());
+                return;
+            }
+            else
+            {
+                canfire = false;
+            }
+          
+        }
+        if (clipsize <=0)
+        {
+            clipsize = 0;
+        }
+        if (canfire)
+        {
+            if (firetype == FireType.auto)
+            {
+
+                if (Input.GetButton("Fire1") && Time.time >= fireDelay)
+                {
+                    fireDelay = Time.time + 1f / fireRate;
+                    Shoot();
+
+                }
+            }
+            else if (firetype == FireType.semi)
+            {
+
+                if (Input.GetButtonDown("Fire1") && Time.time >= fireDelay)
+                {
+                    fireDelay = Time.time + 1f / fireRate;
+                    Shoot();
+                    currentAmmo--;
+
+                }
             }
         }
-        else if (firetype == FireType.semi)
-        {
-
-            if (Input.GetButtonDown("Fire1") && Time.time >= fireDelay)
-            {
-                fireDelay = Time.time + 1f / fireRate;
-                Shoot();
-            }
-        }
-        
        
+
+ 
 	}
 }

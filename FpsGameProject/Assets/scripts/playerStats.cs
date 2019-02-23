@@ -7,9 +7,11 @@ public class playerStats : MonoBehaviour {
 
     public float health = 100f;
     GameObject healthtext;
+    GameObject ammotext;
 	void Start () {
         healthtext = GameObject.FindGameObjectWithTag("healthtext");
-	}
+        ammotext = GameObject.FindGameObjectWithTag("ammotext");
+    }
 	
 	
 	void Update () {
@@ -19,5 +21,7 @@ public class playerStats : MonoBehaviour {
             health = 0;
             Debug.Log("Died");
         }
+
+        ammotext.GetComponent<Text>().text = "Ammo:";
 	}
 }

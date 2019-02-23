@@ -874,6 +874,8 @@ MonoBehaviour:
   mycamera: {fileID: 20707988738778490}
   range: 0
   bullethole: {fileID: 1046175685003662, guid: 4515e7ff49aed874fadf1888d90dd983, type: 2}
+  laserimpact: {fileID: 1232575477374758, guid: 8b1fcdee07e764646a53b84715db97d8,
+    type: 2}
   fireRate: 0
 --- !u!114 &114668550985084096
 MonoBehaviour:
@@ -1017,6 +1019,8 @@ MonoBehaviour:
   mycamera: {fileID: 20707988738778490}
   range: 0
   bullethole: {fileID: 1046175685003662, guid: 4515e7ff49aed874fadf1888d90dd983, type: 2}
+  laserimpact: {fileID: 1232575477374758, guid: 8b1fcdee07e764646a53b84715db97d8,
+    type: 2}
   fireRate: 0
 --- !u!114 &114706355243250344
 MonoBehaviour:
@@ -1037,6 +1041,8 @@ MonoBehaviour:
   mycamera: {fileID: 20707988738778490}
   range: 0
   bullethole: {fileID: 1046175685003662, guid: 4515e7ff49aed874fadf1888d90dd983, type: 2}
+  laserimpact: {fileID: 1232575477374758, guid: 8b1fcdee07e764646a53b84715db97d8,
+    type: 2}
   fireRate: 0
 --- !u!114 &114920787643290406
 MonoBehaviour:
