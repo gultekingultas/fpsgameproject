@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33401158910781532}
   - component: {fileID: 23789444976461204}
   - component: {fileID: 65466603315388266}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: laser2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 23526909102152082}
   - component: {fileID: 65453534642580930}
   - component: {fileID: 114664603250532680}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4693175819915848}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: firepoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,4 +223,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b634f4af99d9eec4da92e342a433f298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapontype: 1
+  weapontype: 0
+  pelletnumber: 0
+  accuracy: 0
+  firepoint: {fileID: 0}
+  mycamera: {fileID: 0}
+  range: 0
