@@ -9,13 +9,21 @@ public class Weapon : MonoBehaviour {
         shotgun,
         launcher
     };
+    public enum FireType
+    {
+        auto,
+        semi
+    };
     public Weapontype weapontype;
+    public FireType firetype;
     public int pelletnumber;
     public float accuracy;
     public Transform firepoint;
     public Camera mycamera;
     public float range;
-   // public GameObject bullethole;
+    public GameObject bullethole;
+    public float fireRate;
+    private float fireDelay;
     
 
     // Use this for initialization
@@ -27,6 +35,7 @@ public class Weapon : MonoBehaviour {
             firepoint = mycamera.transform;
             range = Mathf.Infinity;
             pelletnumber = 1;
+          
         }
         else if (weapontype == Weapontype.shotgun)
         {
@@ -35,10 +44,21 @@ public class Weapon : MonoBehaviour {
             firepoint = mycamera.transform;
             range = Mathf.Infinity;
             pelletnumber = 21;
+          
         }
         else if (weapontype == Weapontype.launcher)
         {
             Debug.Log("Launcher");
+        }
+        if (firetype == FireType.auto)
+        {
+            fireRate = 15f;
+            fireDelay = 0f;
+        }
+        else if (firetype == FireType.semi)
+        {
+            fireRate = 1f;
+            fireDelay = 0f;
         }
 	}
 
@@ -56,8 +76,8 @@ public class Weapon : MonoBehaviour {
             if (Physics.Raycast(firepoint.position, direction, out hit, range))
             {
                 Debug.Log(hit.transform.name);
-             //   GameObject impactGo = Instantiate(bullethole, hit.point, Quaternion.LookRotation(hit.normal));
-               // Destroy(impactGo, 1f);
+                GameObject impactGo = Instantiate(bullethole, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(impactGo, 1f);
 
             }
         }
@@ -65,9 +85,25 @@ public class Weapon : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetButtonDown("Fire1"))
+        if (firetype == FireType.auto)
         {
-            Shoot();
+
+            if (Input.GetButton("Fire1") && Time.time >= fireDelay)
+            {
+                fireDelay = Time.time + 1f / fireRate;
+                Shoot();
+            }
         }
+        else if (firetype == FireType.semi)
+        {
+
+            if (Input.GetButtonDown("Fire1") && Time.time >= fireDelay)
+            {
+                fireDelay = Time.time + 1f / fireRate;
+                Shoot();
+            }
+        }
+        
+       
 	}
 }
