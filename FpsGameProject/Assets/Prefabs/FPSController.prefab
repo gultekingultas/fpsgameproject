@@ -327,7 +327,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1509889416926772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 0.01, z: 0.512}
+  m_LocalPosition: {x: 0.27, y: 0.18, z: 0.761}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4717193064883700}
@@ -872,11 +872,23 @@ MonoBehaviour:
   accuracy: 0
   firepoint: {fileID: 0}
   mycamera: {fileID: 20707988738778490}
+  launcherfp: {fileID: 0}
   range: 0
   bullethole: {fileID: 1046175685003662, guid: 4515e7ff49aed874fadf1888d90dd983, type: 2}
   laserimpact: {fileID: 1232575477374758, guid: 8b1fcdee07e764646a53b84715db97d8,
     type: 2}
   fireRate: 0
+  isReloading: 0
+  canfire: 1
+  maxAmmo: 0
+  reloadTime: 0
+  maxlaser: 0
+  reloadlaserpersecond: 0
+  timeforcharge: 0
+  bomb: {fileID: 1626826877115770, guid: 645f034cefddb4146bbb6faf70faabfd, type: 2}
+  maxBomb: 0
+  reloadlaunchertime: 0
+  throwforce: 0
 --- !u!114 &114668550985084096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1017,11 +1029,23 @@ MonoBehaviour:
   accuracy: 0
   firepoint: {fileID: 4781955672652380}
   mycamera: {fileID: 20707988738778490}
+  launcherfp: {fileID: 4781955672652380}
   range: 0
   bullethole: {fileID: 1046175685003662, guid: 4515e7ff49aed874fadf1888d90dd983, type: 2}
   laserimpact: {fileID: 1232575477374758, guid: 8b1fcdee07e764646a53b84715db97d8,
     type: 2}
   fireRate: 0
+  isReloading: 0
+  canfire: 1
+  maxAmmo: 0
+  reloadTime: 0
+  maxlaser: 0
+  reloadlaserpersecond: 0
+  timeforcharge: 0
+  bomb: {fileID: 1626826877115770, guid: 645f034cefddb4146bbb6faf70faabfd, type: 2}
+  maxBomb: 0
+  reloadlaunchertime: 0
+  throwforce: 0
 --- !u!114 &114706355243250344
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1039,11 +1063,23 @@ MonoBehaviour:
   accuracy: 0
   firepoint: {fileID: 0}
   mycamera: {fileID: 20707988738778490}
+  launcherfp: {fileID: 0}
   range: 0
   bullethole: {fileID: 1046175685003662, guid: 4515e7ff49aed874fadf1888d90dd983, type: 2}
   laserimpact: {fileID: 1232575477374758, guid: 8b1fcdee07e764646a53b84715db97d8,
     type: 2}
   fireRate: 0
+  isReloading: 0
+  canfire: 1
+  maxAmmo: 0
+  reloadTime: 0
+  maxlaser: 0
+  reloadlaserpersecond: 0
+  timeforcharge: 0
+  bomb: {fileID: 1626826877115770, guid: 645f034cefddb4146bbb6faf70faabfd, type: 2}
+  maxBomb: 0
+  reloadlaunchertime: 0
+  throwforce: 0
 --- !u!114 &114920787643290406
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -14,12 +14,15 @@ public class Weapon : MonoBehaviour {
         auto,
         semi
     };
+    GameObject player;
+
     public Weapontype weapontype;
     public FireType firetype;
     public int pelletnumber;
     public float accuracy;
     public Transform firepoint;
     public Camera mycamera;
+    public Transform launcherfp;
     public float range;
     public GameObject bullethole;
     public GameObject laserimpact;
@@ -30,19 +33,37 @@ public class Weapon : MonoBehaviour {
     public bool canfire = true;
 
     // shotgun
-    public int currentAmmo;
+    public static int currentAmmo;
     public int maxAmmo;
     public float reloadTime;
-    public int clipsize;
+    public static int  clipsize;
     //
     // Laser
+    public static float currentlaser;
+    public float maxlaser;
+    public float reloadlaserpersecond;
+    public float timeforcharge;
 
     //
     //Launcher
- 
+    public GameObject bomb;
+    public static int currentBomb;
+    public int maxBomb;
+    public float reloadlaunchertime;
+    public static int clipsizelauncher;
+    public float throwforce;
     
+
     //
     // Use this for initialization
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("player");
+    }
+    private void OnEnable()
+    {
+        isReloading = false;
+    }
     void Start () {
         if (weapontype == Weapontype.laser)
         {
@@ -52,9 +73,11 @@ public class Weapon : MonoBehaviour {
             firepoint = mycamera.transform;
             range = Mathf.Infinity;
             pelletnumber = 1;
-             hiteffect = laserimpact;
-          
-            
+            hiteffect = laserimpact;
+            maxlaser = 10f;
+            currentlaser = maxlaser;
+            reloadlaserpersecond = .5f;
+            timeforcharge = 4f;
           
         }
         else if (weapontype == Weapontype.shotgun)
@@ -72,9 +95,16 @@ public class Weapon : MonoBehaviour {
           
           
         }
+
         else if (weapontype == Weapontype.launcher)
         {
             Debug.Log("Launcher");
+            firepoint = launcherfp;
+            maxBomb = 3;
+            currentBomb = maxBomb;
+            clipsizelauncher = 3;
+            reloadlaunchertime = 2f;
+            throwforce = 12f;
         }
         if (firetype == FireType.auto)
         {
@@ -88,6 +118,12 @@ public class Weapon : MonoBehaviour {
         }
 	}
 
+    void ThrowBomb()
+    {
+        GameObject bombGO = Instantiate(bomb,firepoint.position, firepoint.rotation);
+        Rigidbody rb = bombGO.GetComponent<Rigidbody>();
+        rb.AddForce(firepoint.forward*throwforce,ForceMode.VelocityChange);
+    }
 
     void Shoot()
     {
@@ -109,7 +145,10 @@ public class Weapon : MonoBehaviour {
         }
       
     }
-
+    void ReloadLaser()
+    {
+       currentlaser += Time.deltaTime*reloadlaserpersecond;
+    }
     IEnumerator Reload()
     {
         isReloading = true;
@@ -132,38 +171,22 @@ public class Weapon : MonoBehaviour {
         isReloading = false;
         canfire = true;
     }
-	// Update is called once per frame
-	void Update () {
-        if (isReloading)
-        {
-            return;
-        }
-        if (currentAmmo <= 0 || Input.GetKeyDown(KeyCode.R))
-        {
-            if (clipsize > 0)
-            {
-                StartCoroutine(Reload());
-                return;
-            }
-            else
-            {
-                canfire = false;
-            }
-          
-        }
-        if (clipsize <=0)
-        {
-            clipsize = 0;
-        }
+    private void FixedUpdate()
+    {
         if (canfire)
         {
             if (firetype == FireType.auto)
             {
-
+             
                 if (Input.GetButton("Fire1") && Time.time >= fireDelay)
                 {
                     fireDelay = Time.time + 1f / fireRate;
                     Shoot();
+                    if (weapontype == Weapontype.laser)
+                    {
+                        currentlaser--;
+                    }
+           
 
                 }
             }
@@ -173,14 +196,92 @@ public class Weapon : MonoBehaviour {
                 if (Input.GetButtonDown("Fire1") && Time.time >= fireDelay)
                 {
                     fireDelay = Time.time + 1f / fireRate;
-                    Shoot();
-                    currentAmmo--;
+                    
+                    if (weapontype == Weapontype.shotgun)
+                    {
+                        Shoot();
+                        currentAmmo--;
+                    }
+                    else if (weapontype == Weapontype.launcher )
+                    {
+                        ThrowBomb();
+                        currentBomb--;
+
+                    }
 
                 }
             }
         }
-       
+    }
 
- 
-	}
+    // Update is called once per frame
+    void Update () {
+
+        // SHOTGUN
+        if (weapontype == Weapontype.shotgun)
+        {
+            player.GetComponent<playerStats>().Shotgun();
+            if (isReloading)
+            {
+                return;
+            }
+
+            if (currentAmmo <= 0 || Input.GetKeyDown(KeyCode.R))
+            {
+                if (clipsize > 0)
+                {
+                    StartCoroutine(Reload());
+                    return;
+                }
+                else
+                {
+                    if (currentAmmo > 0)
+                    {
+                        return;
+                    }
+                    else {
+                        canfire = false;
+                    }
+                  
+                }
+
+            }
+            if (clipsize < 0)
+            {
+                clipsize = 0;
+            }
+        }
+
+
+        //
+        // LASER
+        if (weapontype == Weapontype.laser)
+        {
+            player.GetComponent<playerStats>().Laser();
+            if (currentlaser < maxlaser)
+            {
+                ReloadLaser();
+            }
+            if (currentlaser <= 0)
+            {
+                currentlaser = 0;
+                canfire = false;
+            }
+            if (currentlaser > 2f)
+            {
+                canfire = true;
+            }
+            if (currentlaser >= maxlaser)
+            {
+                currentlaser = maxlaser;
+            }
+        }
+
+        //
+        if (weapontype == Weapontype.launcher)
+        {
+            player.GetComponent<playerStats>().Launcher();
+        }
+
+    }
 }
