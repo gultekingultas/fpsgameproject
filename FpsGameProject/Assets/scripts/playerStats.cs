@@ -9,6 +9,7 @@ public class playerStats : MonoBehaviour {
     GameObject healthtext;
     GameObject ammotext;
     GameObject weapontext;
+   
      bool shotgun = false;
      bool laser = false;
      bool launcher = false;
@@ -16,6 +17,10 @@ public class playerStats : MonoBehaviour {
         healthtext = GameObject.FindGameObjectWithTag("healthtext");
         ammotext = GameObject.FindGameObjectWithTag("ammotext");
         weapontext = GameObject.FindGameObjectWithTag("weapontext");
+
+      
+
+        tankcontrol.startfollow = true;
     }
 
    public  void Shotgun()
@@ -44,7 +49,7 @@ public class playerStats : MonoBehaviour {
         if (health<=0)
         {
             health = 0;
-            Debug.Log("Died");
+            Application.LoadLevel(Application.loadedLevel);
         }
         if (shotgun)
         {
@@ -53,6 +58,10 @@ public class playerStats : MonoBehaviour {
         if (laser)
         {
             ammotext.GetComponent<Text>().text = "Ammo:"+ Weapon.currentlaser;
+        }
+        if (launcher)
+        {
+            ammotext.GetComponent<Text>().text = "Ammo:" +Weapon.currentBomb;
         }
 	}
 }

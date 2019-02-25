@@ -38,8 +38,9 @@ public class bombmech : MonoBehaviour {
             
             }
             GameObject exp = Instantiate(explosioneffect, transform.position, transform.rotation);
-            Destroy(this.gameObject);
             Destroy(exp, 2f);
+            Destroy(this.gameObject);
+           
             
         }
     }

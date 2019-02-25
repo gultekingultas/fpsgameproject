@@ -20,6 +20,7 @@ public class Weapon : MonoBehaviour {
     public FireType firetype;
     public int pelletnumber;
     public float accuracy;
+    public float damage;
     public Transform firepoint;
     public Camera mycamera;
     public Transform launcherfp;
@@ -37,6 +38,7 @@ public class Weapon : MonoBehaviour {
     public int maxAmmo;
     public float reloadTime;
     public static int  clipsize;
+  
     //
     // Laser
     public static float currentlaser;
@@ -78,6 +80,7 @@ public class Weapon : MonoBehaviour {
             currentlaser = maxlaser;
             reloadlaserpersecond = .5f;
             timeforcharge = 4f;
+            damage = 5f;
           
         }
         else if (weapontype == Weapontype.shotgun)
@@ -92,6 +95,7 @@ public class Weapon : MonoBehaviour {
             currentAmmo = maxAmmo;
             clipsize = 12;
             reloadTime = 2f;
+            damage = 5f;
           
           
         }
@@ -140,6 +144,10 @@ public class Weapon : MonoBehaviour {
                 Debug.Log(hit.transform.name);
                 GameObject impactGo = Instantiate(hiteffect, hit.point, Quaternion.LookRotation(hit.normal));
                 Destroy(impactGo, 1f);
+                if (hit.collider.tag == "enemy")
+                {
+                    hit.collider.gameObject.GetComponent<enemyStats>().getDamage(damage);
+                }
 
             }
         }
@@ -239,7 +247,8 @@ public class Weapon : MonoBehaviour {
                     {
                         return;
                     }
-                    else {
+                    else
+                    {
                         canfire = false;
                     }
                   
@@ -281,6 +290,15 @@ public class Weapon : MonoBehaviour {
         if (weapontype == Weapontype.launcher)
         {
             player.GetComponent<playerStats>().Launcher();
+            if (currentBomb <= 0)
+            {
+                
+                canfire = false;
+            }
+            if (currentBomb > 0)
+            {
+                canfire = true;
+            }
         }
 
     }

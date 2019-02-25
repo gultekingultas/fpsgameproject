@@ -12,7 +12,7 @@ public class bullet : MonoBehaviour {
     // Update is called once per frame
     private void Awake()
     {
-        bulletdamage = GameObject.FindGameObjectWithTag("turret").GetComponent<turret>().damage;
+        bulletdamage = 10;
     }
     void Update () {
 		if (target==null) {

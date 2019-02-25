@@ -11,6 +11,10 @@ TagManager:
   - healthtext
   - player
   - enemy
+  - Fire
+  - crate
+  - scenecam
+  - mainmenupanel
   layers:
   - Default
   - TransparentFX

@@ -870,6 +870,7 @@ MonoBehaviour:
   firetype: 1
   pelletnumber: 0
   accuracy: 0
+  damage: 0
   firepoint: {fileID: 0}
   mycamera: {fileID: 20707988738778490}
   launcherfp: {fileID: 0}
@@ -1027,6 +1028,7 @@ MonoBehaviour:
   firetype: 1
   pelletnumber: 0
   accuracy: 0
+  damage: 0
   firepoint: {fileID: 4781955672652380}
   mycamera: {fileID: 20707988738778490}
   launcherfp: {fileID: 4781955672652380}
@@ -1061,6 +1063,7 @@ MonoBehaviour:
   firetype: 0
   pelletnumber: 0
   accuracy: 0
+  damage: 0
   firepoint: {fileID: 0}
   mycamera: {fileID: 20707988738778490}
   launcherfp: {fileID: 0}
